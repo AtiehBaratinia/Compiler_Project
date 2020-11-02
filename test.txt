@@ -1,2 +1,2 @@
-if(2+2==4):
-print(True)
+if (2+2 == 4):
+    print(True)

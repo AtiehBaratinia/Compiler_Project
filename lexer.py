@@ -8,7 +8,7 @@ class Lexer:
         'IF', 'ELSE', 'ELSEIF', 'WHILE', 'ON', 'WHERE', 'FOR', 'AND', 'OR', 'NOT', 'IN',
         'ASSIGN', 'SUM', 'SUB', 'MUL', 'DIV'
         , 'MOD', 'GT', 'GE', 'LT', 'LE', 'EQ', 'NE', 'LCB', 'RCB', 'LRB', 'RRB', 'LSB'
-        , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ERROR'
+        , 'RSB', 'SEMICOLON', 'COLON', 'COMMA'
     ]
 
     t_INTEGER = r'int'
@@ -53,7 +53,6 @@ class Lexer:
     t_COLON = r':'
     t_COMMA = r','
 
-    t_ERROR = r''
 
     def t_ID(self, t):
         r'(\d+)'
@@ -67,10 +66,14 @@ class Lexer:
         r'(\d+)'
         return t
 
+    def t_newline(self, t):
+        r'\n+'
+        t.lexer.lineno += len(t.value)
+
     t_ignore = '\n \t '
 
     def t_error(self, t):
-        raise Exception('Error at', t.value)
+       raise Exception('Error at', t.value)
 
     def build(self, **kwargs):
         self.lexer = lex.lex(module=self, **kwargs)
