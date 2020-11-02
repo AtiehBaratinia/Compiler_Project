@@ -53,31 +53,32 @@ class Lexer:
     t_SEMICOLON = r';'
     t_COLON = r':'
     t_COMMA = r','
+    t_ignore = ' \t'
 
     def t_ID(self, t):
         r'[a-z_][_a-zA-Z0-9]*'
         # t.type = reserved.get(t.value, 'ID')
         return t
 
-    def t_FLOATNUMBER(self, t):
-        r'[-+]?[1-9][0-9]*[.][0-9]*[1-9]'
-        return t
 
+    def t_FLOATNUMBER(self, t):
+        r'[-+]?[0-9]{1,9}[.][0-9]{1,9}'
+        t.value = float(t.value)
+        return t
 
     def t_INTEGERNUMBER(self, t):
-        r'[-+]?[1-9][0-9]* | 0'
+        r'[-+]?[0-9]{1,9}'
+        t.value = int(t.value)
         return t
-
 
     def t_newline(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
 
-    t_ignore = '\n \t'
-
     def t_error(self, t):
-        print("Illegal character '%s'" % t.value[0])
+        # print("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
+        return 'ERROR'
 
     def build(self, **kwargs):
         self.lexer = lex.lex(module=self, **kwargs)
