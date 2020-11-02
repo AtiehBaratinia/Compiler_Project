@@ -2,35 +2,36 @@ from ply import lex
 
 
 class Lexer:
-    tokens = [
-        'ID', 'INTEGERNUMBER', 'FLOATNUMBER',
-        'INTEGER', 'FLOAT', 'BOOLEAN', 'FUNCTION', 'TRUE', 'FALSE', 'PRINT', 'RETURN', 'MAIN',
-        'IF', 'ELSE', 'ELSEIF', 'WHILE', 'ON', 'WHERE', 'FOR', 'AND', 'OR', 'NOT', 'IN',
-        'ASSIGN', 'SUM', 'SUB', 'MUL', 'DIV'
-        , 'MOD', 'GT', 'GE', 'LT', 'LE', 'EQ', 'NE', 'LCB', 'RCB', 'LRB', 'RRB', 'LSB'
-        , 'RSB', 'SEMICOLON', 'COLON', 'COMMA'
-    ]
+    # tokens = [
+    #     'INTEGERNUMBER', 'FLOATNUMBER',
+    #     'INTEGER', 'FLOAT', 'BOOLEAN', 'FUNCTION', 'TRUE', 'FALSE', 'PRINT', 'RETURN', 'MAIN',
+    #     'IF', 'ELSE', 'ELSEIF', 'WHILE', 'ON', 'WHERE', 'FOR', 'AND', 'OR', 'NOT', 'IN',
+    #     'ASSIGN', 'SUM', 'SUB', 'MUL', 'DIV'
+    #     , 'MOD', 'GT', 'GE', 'LT', 'LE', 'EQ', 'NE', 'LCB', 'RCB', 'LRB', 'RRB', 'LSB'
+    #     , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID'
+    # ]
 
-    t_INTEGER = r'int'
-    t_FLOAT = r'float'
-    t_BOOLEAN = r'bool'
-    t_FUNCTION = r'fun'
+    reserved = {
+        'if': 'IF',
+        'then': 'THEN', 'int': 'INTEGER', 'float': 'FLOAT', 'bool': 'BOOLEAN', 'fun': 'FUNCTION', 'print': 'PRINT',
+        'return': 'RETURN', 'main': 'MAIN', 'else': 'ELSE',
+        'while': 'WHILE',
+        'elseif': 'ELSEIF',
+        'on': 'ON',
+        'where': 'WHERE', 'for': 'FOR', 'and': 'AND', 'or': 'OR', 'not': 'NOT', 'in': 'IN'
+    }
+
+    tokens = [
+                 'INTEGERNUMBER', 'FLOATNUMBER',
+                 'TRUE', 'FALSE',
+                 'ASSIGN', 'SUM', 'SUB', 'MUL', 'DIV'
+                 , 'MOD', 'GT', 'GE', 'LT', 'LE', 'EQ', 'NE', 'LCB', 'RCB', 'LRB', 'RRB', 'LSB'
+                 , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID'
+             ] + list(reserved.values())
+
     t_TRUE = r'True'
     t_FALSE = r'False'
-    t_PRINT = r'print'
-    t_RETURN = r'return'
-    t_MAIN = r'main'
-    t_IF = r'if'
-    t_ELSE = r'else'
-    t_ELSEIF = r'elseif'
-    t_WHILE = r'while'
-    t_ON = r'on'
-    t_WHERE = r'where'
-    t_FOR = r'for'
-    t_AND = r'and'
-    t_OR = r'or'
-    t_NOT = r'not'
-    t_IN = r'in'
+
     t_ASSIGN = r'\='
     t_SUM = r'\+'
     t_SUB = r'\-'
@@ -53,27 +54,30 @@ class Lexer:
     t_COLON = r':'
     t_COMMA = r','
 
-
     def t_ID(self, t):
-        r'(\d+)'
+        r'[a-z_][_a-zA-Z0-9]*'
+        # t.type = reserved.get(t.value, 'ID')
         return t
 
     def t_FLOATNUMBER(self, t):
-        r'(\d+)'
+        r'[-+]?[1-9][0-9]*[.][0-9]*[1-9]'
         return t
 
+
     def t_INTEGERNUMBER(self, t):
-        r'(\d+)'
+        r'[-+]?[1-9][0-9]* | 0'
         return t
+
 
     def t_newline(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
 
-    t_ignore = '\n \t '
+    t_ignore = '\n \t'
 
     def t_error(self, t):
-       raise Exception('Error at', t.value)
+        print("Illegal character '%s'" % t.value[0])
+        t.lexer.skip(1)
 
     def build(self, **kwargs):
         self.lexer = lex.lex(module=self, **kwargs)
