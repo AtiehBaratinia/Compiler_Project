@@ -49,8 +49,8 @@ class Lexer:
 
     def t_ID(self, t):
         r'[a-z_][_a-zA-Z0-9]*'
-        if t.value in reserved:
-            t.type = reserved[t.value]
+        if t.value in self.reserved:
+            t.type = self.reserved[t.value]
         return t
 
 
