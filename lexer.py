@@ -2,14 +2,6 @@ from ply import lex
 
 
 class Lexer:
-    # tokens = [
-    #     'INTEGERNUMBER', 'FLOATNUMBER',
-    #     'INTEGER', 'FLOAT', 'BOOLEAN', 'FUNCTION', 'TRUE', 'FALSE', 'PRINT', 'RETURN', 'MAIN',
-    #     'IF', 'ELSE', 'ELSEIF', 'WHILE', 'ON', 'WHERE', 'FOR', 'AND', 'OR', 'NOT', 'IN',
-    #     'ASSIGN', 'SUM', 'SUB', 'MUL', 'DIV'
-    #     , 'MOD', 'GT', 'GE', 'LT', 'LE', 'EQ', 'NE', 'LCB', 'RCB', 'LRB', 'RRB', 'LSB'
-    #     , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID'
-    # ]
 
     reserved = {
         'if': 'IF',
@@ -27,8 +19,8 @@ class Lexer:
                  'ASSIGN', 'SUM', 'SUB', 'MUL', 'DIV'
                  , 'MOD', 'GT', 'GE', 'LT', 'LE', 'EQ', 'NE', 'LCB', 'RCB', 'LRB', 'RRB', 'LSB'
                  , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID'
-             ] + list(reserved.values())
-
+             ]
+    tokens += reserved.values()
     t_TRUE = r'True'
     t_FALSE = r'False'
 
@@ -57,17 +49,18 @@ class Lexer:
 
     def t_ID(self, t):
         r'[a-z_][_a-zA-Z0-9]*'
-        # t.type = reserved.get(t.value, 'ID')
+        if t.value in reserved:
+            t.type = reserved[t.value]
         return t
 
 
     def t_FLOATNUMBER(self, t):
-        r'[-+]?[0-9]{1,9}[.][0-9]{1,9}'
+        r'[+]?[0-9]{1,9}[.][0-9]{1,9}'
         t.value = float(t.value)
         return t
 
     def t_INTEGERNUMBER(self, t):
-        r'[-+]?[0-9]{1,9}'
+        r'[+]?[0-9]{1,9}'
         t.value = int(t.value)
         return t
 
@@ -81,5 +74,6 @@ class Lexer:
         return 'ERROR'
 
     def build(self, **kwargs):
+
         self.lexer = lex.lex(module=self, **kwargs)
         return self.lexer
