@@ -3,7 +3,7 @@ from lexer import Lexer
 
 if __name__ == "__main__":
     lexer = Lexer().build()
-    file = open('test.txt')
+    file = open('test1.txt')
     text_input = file.read()
     file.close()
     lexer.input(text_input)
