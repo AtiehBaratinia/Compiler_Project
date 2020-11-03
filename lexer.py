@@ -18,7 +18,7 @@ class Lexer:
                  'TRUE', 'FALSE',
                  'ASSIGN', 'SUM', 'SUB', 'MUL', 'DIV'
                  , 'MOD', 'GT', 'GE', 'LT', 'LE', 'EQ', 'NE', 'LCB', 'RCB', 'LRB', 'RRB', 'LSB'
-                 , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID'
+                 , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID', 'ERROR'
              ]
     tokens += reserved.values()
     t_TRUE = r'True'
@@ -67,6 +67,10 @@ class Lexer:
     def t_newline(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
+
+    def t_ERROR(self, t):
+        r'[A-Z0-9][_a-zA-Z0-9]*'
+        return t
 
     def t_error(self, t):
         # print("Illegal character '%s'" % t.value[0])
