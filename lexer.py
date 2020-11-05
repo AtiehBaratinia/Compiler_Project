@@ -21,8 +21,8 @@ class Lexer:
                  , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID', 'ERROR'
              ]
     tokens += reserved.values()
-    t_TRUE = r'True'
-    t_FALSE = r'False'
+    # t_TRUE = r'True'
+    # t_FALSE = r'False'
 
     t_ASSIGN = r'\='
     t_SUM = r'\+'
@@ -47,12 +47,17 @@ class Lexer:
     t_COMMA = r','
     t_ignore = ' \t'
 
-    def t_ERROR(self, t):
-        r'(ERROR)|([\+\-\*\/\%](\s*[\+\-\*\/\%])+)|([A-Z0-9]+[_a-z]+)|([0-9]{9}[0-9]+([.][0-9]*)?)|([0-9]+[.][0-9]+([.][0-9]+)+)'
-        # r'[A-Z0-9]+[_a-z]+'
-        # r'[0-9]^10[0-9]+([.][0-9]{1,9})?'
-        # r'[+]?[0-9]+[.][0-9]+([.][0-9]+)+'
+    def t_TRUE(self, t):
+        r'True'
         return t
+
+    def t_FALSE(self, t):
+        r'False'
+        return
+
+    # def t_ERROR(self, t):
+    #     r'(ERROR)|([\+\-\*\/\%](\s*[\+\-\*\/\%])+)|([A-Z0-9]+[_a-z]+)|([0-9]{9}[0-9]+([.][0-9]*)?)|([0-9]+[.][0-9]+([.][0-9]+)+)'
+    #     return t
 
     def t_ID(self, t):
         r'[a-z_][_a-zA-Z0-9]*'
