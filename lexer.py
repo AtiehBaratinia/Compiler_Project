@@ -55,9 +55,9 @@ class Lexer:
         r'False'
         return
 
-    # def t_ERROR(self, t):
-    #     r'(ERROR)|([\+\-\*\/\%](\s*[\+\-\*\/\%])+)|([A-Z0-9]+[_a-z]+)|([0-9]{9}[0-9]+([.][0-9]*)?)|([0-9]+[.][0-9]+([.][0-9]+)+)'
-    #     return t
+    def t_ERROR(self, t):
+        r'(ERROR)|([\+\-\*\/\%](\s*[\+\-\*\/\%])+)|([A-Z0-9]+[_a-z]+)|([0-9]+[.][0-9]{9}[0-9]+)|([0-9]{9}[0-9]+([.][0-9]*)?)|([0-9]+[.][0-9]+([.][0-9]+)+)'
+        return t
 
     def t_ID(self, t):
         r'[a-z_][_a-zA-Z0-9]*'
@@ -66,7 +66,7 @@ class Lexer:
         return t
 
     def t_FLOATNUMBER(self, t):
-        r'[0-9]{1,9}[.][0-9]+'
+        r'[0-9]{1,9}[.][0-9]{1,9}'
         t.value = str(float(t.value))
         return t
 
