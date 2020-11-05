@@ -18,7 +18,7 @@ class Lexer:
                  'TRUE', 'FALSE',
                  'ASSIGN', 'SUM', 'SUB', 'MUL', 'DIV'
                  , 'MOD', 'GT', 'GE', 'LT', 'LE', 'EQ', 'NE', 'LCB', 'RCB', 'LRB', 'RRB', 'LSB'
-                 , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID'
+                 , 'RSB', 'SEMICOLON', 'COLON', 'COMMA', 'ID', 'ERROR'
              ]
     tokens += reserved.values()
     t_TRUE = r'True'
@@ -47,21 +47,31 @@ class Lexer:
     t_COMMA = r','
     t_ignore = ' \t'
 
-    def t_ID(self, t):
-        r'[a-z_][_a-zA-Z0-9]*'
-        if t.value in self.reserved:
-            t.type = self.reserved[t.value]
+    def t_ERROR(self, t):
+        r'ERROR|\
+        ([\+\-\*\/\%](\S*[\+\-\*\/\%])+)|\
+        ([A-Z0-9]+[_a-z]+)|\
+        ([0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]+([.]?[0-9]+)?)\
+        |([0-9]+[.][0-9]+([.][0-9]+)+)'
+        # r'[A-Z0-9]+[_a-z]+'
+        # r'[0-9]^10[0-9]+([.][0-9]{1,9})?'
+        # r'[+]?[0-9]+[.][0-9]+([.][0-9]+)+'
         return t
 
-
     def t_FLOATNUMBER(self, t):
-        r'[+]?[0-9]{1,9}[.][0-9]{1,9}'
+        r'[0-9]+[.][0-9]+'
         t.value = float(t.value)
         return t
 
     def t_INTEGERNUMBER(self, t):
-        r'[+]?[0-9]{1,9}'
+        r'[0-9]{1,9}'
         t.value = int(t.value)
+        return t
+
+    def t_ID(self, t):
+        r'[a-z_][_a-zA-Z0-9]*'
+        if t.value in self.reserved:
+            t.type = self.reserved[t.value]
         return t
 
     def t_newline(self, t):
@@ -74,6 +84,5 @@ class Lexer:
         return 'ERROR'
 
     def build(self, **kwargs):
-
         self.lexer = lex.lex(module=self, **kwargs)
         return self.lexer

@@ -9,7 +9,8 @@ if __name__ == "__main__":
     lexer.input(text_input)
     while True:
         tok = lexer.token()
-        if not tok: break
+        if not tok:
+            break
         print(tok)
     # parser = Parser()
     # parser.build().parse(text_input, lexer, False)
