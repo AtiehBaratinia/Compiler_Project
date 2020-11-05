@@ -2,6 +2,8 @@ from ply import lex
 
 
 class Lexer:
+    def __init__(self, text_file):
+        self.input = text_file
 
     reserved = {
         'if': 'IF',
@@ -53,11 +55,21 @@ class Lexer:
 
     def t_FALSE(self, t):
         r'False'
-        return
+        return t
+
+    def calculate_position(self, t):
+        line_start = self.input.rfind('\n', 0, t.lexpos) + 1
+        return f'{t.lexer.lineno}, {t.lexpos - line_start + 1}'
 
     def t_ERROR(self, t):
-        r'(ERROR)|([\+\-\*\/\%](\s*[\+\-\*\/\%])+)|([A-Z0-9]+[_a-z]+)|([0-9]+[.][0-9]{9}[0-9]+)|([0-9]{9}[0-9]+([.][0-9]*)?)|([0-9]+[.][0-9]+([.][0-9]+)+)'
-        return t
+        r"""(ERROR)
+        |([\+\-\*\/\%](\s*[\+\-\*\/\%])+)
+        |([A-Z0-9]+[_a-z]+)
+        |([0-9]+[.][0-9]{9}[0-9]+)
+        |([0-9]{9}[0-9]+([.][0-9]*)?)
+        |([0-9]+[.][0-9]+([.][0-9]+)+)"""
+
+        print(f'ERROR {self.calculate_position(t)}')
 
     def t_ID(self, t):
         r'[a-z_][_a-zA-Z0-9]*'
@@ -79,15 +91,16 @@ class Lexer:
         r'\n+'
         t.lexer.lineno += len(t.value)
 
-    # def t_ERROR(self, t):
-    #     r'[A-Z0-9][_a-zA-Z0-9]*'
-    #     return t
+    # def t_error(self, t):
+    #     i = 0
+    #     while t.value[i] != " " or t.value[i] != '\n':
+    #         i += 1
+    #     t.lexer.skip(i)
+    #     return 'ERROR'
 
     def t_error(self, t):
-        i = 0
-        while t.value[i] != " ":
-            i += 1
-        t.lexer.skip(i)
+        # print("Illegal character '%s'" % t.value[0])
+        t.lexer.skip(1)
         return 'ERROR'
 
     def build(self, **kwargs):
