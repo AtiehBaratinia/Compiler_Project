@@ -48,30 +48,26 @@ class Lexer:
     t_ignore = ' \t'
 
     def t_ERROR(self, t):
-        r'ERROR|\
-        ([\+\-\*\/\%](\S*[\+\-\*\/\%])+)|\
-        ([A-Z0-9]+[_a-z]+)|\
-        ([0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]+([.]?[0-9]+)?)\
-        |([0-9]+[.][0-9]+([.][0-9]+)+)'
+        r'(ERROR)|([\+\-\*\/\%](\s*[\+\-\*\/\%])+)|([A-Z0-9]+[_a-z]+)|([0-9]{9}[0-9]+([.][0-9]*)?)|([0-9]+[.][0-9]+([.][0-9]+)+)'
         # r'[A-Z0-9]+[_a-z]+'
         # r'[0-9]^10[0-9]+([.][0-9]{1,9})?'
         # r'[+]?[0-9]+[.][0-9]+([.][0-9]+)+'
-        return t
-
-    def t_FLOATNUMBER(self, t):
-        r'[0-9]+[.][0-9]+'
-        t.value = float(t.value)
-        return t
-
-    def t_INTEGERNUMBER(self, t):
-        r'[0-9]{1,9}'
-        t.value = int(t.value)
         return t
 
     def t_ID(self, t):
         r'[a-z_][_a-zA-Z0-9]*'
         if t.value in self.reserved:
             t.type = self.reserved[t.value]
+        return t
+
+    def t_FLOATNUMBER(self, t):
+        r'[0-9]{1,9}[.][0-9]+'
+        t.value = str(float(t.value))
+        return t
+
+    def t_INTEGERNUMBER(self, t):
+        r'[0-9]{1,9}'
+        t.value = str(int(t.value))
         return t
 
     def t_newline(self, t):
@@ -83,7 +79,6 @@ class Lexer:
     #     return t
 
     def t_error(self, t):
-        # print("Illegal character '%s'" % t.value[0])
         i = 0
         while t.value[i] != " ":
             i += 1
