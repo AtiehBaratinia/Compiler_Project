@@ -68,13 +68,16 @@ class Lexer:
         r'\n+'
         t.lexer.lineno += len(t.value)
 
-    def t_ERROR(self, t):
-        r'[A-Z0-9][_a-zA-Z0-9]*'
-        return t
+    # def t_ERROR(self, t):
+    #     r'[A-Z0-9][_a-zA-Z0-9]*'
+    #     return t
 
     def t_error(self, t):
         # print("Illegal character '%s'" % t.value[0])
-        t.lexer.skip(1)
+        i = 0
+        while t.value[i] != " ":
+            i += 1
+        t.lexer.skip(i)
         return 'ERROR'
 
     def build(self, **kwargs):
