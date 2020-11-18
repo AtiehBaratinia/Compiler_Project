@@ -2,8 +2,8 @@ from ply import lex
 
 
 class Lexer:
-    def __init__(self, text_file):
-        self.input = text_file
+    # def __init__(self, text_file):
+    #     self.input = text_file
 
     reserved = {
         'if': 'IF',
