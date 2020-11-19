@@ -1,1 +1,190 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ERROR
+    FLOATNUMBER
+    THEN
+
+Grammar
+
+Rule 0     S' -> epsilon
+Rule 1     epsilon -> <empty>
+Rule 2     program -> declist MAIN LRB RRB block
+Rule 3     declist -> dec
+Rule 4     declist -> declist dec
+Rule 5     declist -> epsilon
+Rule 6     dec -> vardec
+Rule 7     dec -> funcdec
+Rule 8     type -> INTEGER
+Rule 9     type -> FLOAT
+Rule 10    type -> BOOLEAN
+Rule 11    iddec -> ID
+Rule 12    iddec -> ID LSB exp RSB
+Rule 13    iddec -> ID ASSIGN exp
+Rule 14    idlist -> iddec
+Rule 15    idlist -> idlist COMMA iddec
+Rule 16    vardec -> idlist COLON type SEMICOLON
+Rule 17    funcdec -> FUNCTION ID LRB paramdecs RRB COLON type block
+Rule 18    funcdec -> FUNCTION ID LRB paramdecs RRB block
+Rule 19    paramdecs -> paramdecslist
+Rule 20    paramdecs -> epsilon
+Rule 21    paramdecslist -> paramdec
+Rule 22    paramdecslist -> paramdecslist COMMA paramdec
+Rule 23    paramdec -> ID COLON type
+Rule 24    paramdec -> ID LSB RSB COLON type
+Rule 25    block -> LCB stmtlist RCB
+Rule 26    stmtlist -> stmt
+Rule 27    stmtlist -> stmtlist stmt
+Rule 28    stmtlist -> epsilon
+Rule 29    lvalue -> ID
+Rule 30    lvalue -> ID LSB exp RSB
+Rule 31    case -> WHERE const COLON stmtlist
+Rule 32    cases -> case
+Rule 33    cases -> cases case
+Rule 34    cases -> epsilon
+Rule 35    stmt -> RETURN exp SEMICOLON
+Rule 36    stmt -> exp SEMICOLON
+Rule 37    stmt -> block
+Rule 38    stmt -> vardec
+Rule 39    stmt -> WHILE LRB exp RRB stmt
+Rule 40    stmt -> ON LRB exp RRB LCB cases RCB SEMICOLON
+Rule 41    stmt -> FOR LRB exp SEMICOLON exp SEMICOLON exp RRB stmt
+Rule 42    stmt -> FOR LRB ID IN ID RRB stmt
+Rule 43    stmt -> IF LRB exp RRB stmt elseiflist
+Rule 44    stmt -> IF LRB exp RRB stmt elseiflist ELSE stmt
+Rule 45    stmt -> PRINT LRB ID RRB SEMICOLON
+Rule 46    elseiflist -> ELSEIF LRB exp RRB stmt
+Rule 47    elseiflist -> elseiflist ELSEIF LRB exp RRB stmt
+Rule 48    elseiflist -> epsilon
+Rule 49    relopexp -> exp relop exp
+Rule 50    relopexp -> relopexp relop exp
+Rule 51    exp -> lvalue ASSIGN exp
+Rule 52    exp -> exp operator exp
+Rule 53    exp -> relopexp
+Rule 54    exp -> const
+Rule 55    exp -> lvalue
+Rule 56    exp -> ID LRB explist RRB
+Rule 57    exp -> LRB exp RRB
+Rule 58    exp -> ID LRB RRB
+Rule 59    exp -> SUB exp
+Rule 60    exp -> NOT exp
+Rule 61    operator -> AND
+Rule 62    operator -> OR
+Rule 63    operator -> SUM
+Rule 64    operator -> SUB
+Rule 65    operator -> MUL
+Rule 66    operator -> DIV
+Rule 67    operator -> MOD
+Rule 68    const -> INTEGER
+Rule 69    const -> FLOAT
+Rule 70    const -> TRUE
+Rule 71    const -> FALSE
+Rule 72    relop -> GT
+Rule 73    relop -> LT
+Rule 74    relop -> NE
+Rule 75    relop -> EQ
+Rule 76    relop -> LE
+Rule 77    relop -> GE
+Rule 78    explist -> exp
+Rule 79    explist -> explist COMMA exp
+Rule 80    exp -> exp SUM exp
+Rule 81    exp -> exp SUB exp
+Rule 82    exp -> exp MUL exp
+Rule 83    exp -> exp DIV exp
+Rule 84    exp -> INTEGERNUMBER
+
+Terminals, with rules where they appear
+
+AND                  : 61
+ASSIGN               : 13 51
+BOOLEAN              : 10
+COLON                : 16 17 23 24 31
+COMMA                : 15 22 79
+DIV                  : 66 83
+ELSE                 : 44
+ELSEIF               : 46 47
+EQ                   : 75
+ERROR                : 
+FALSE                : 71
+FLOAT                : 9 69
+FLOATNUMBER          : 
+FOR                  : 41 42
+FUNCTION             : 17 18
+GE                   : 77
+GT                   : 72
+ID                   : 11 12 13 17 18 23 24 29 30 42 42 45 56 58
+IF                   : 43 44
+IN                   : 42
+INTEGER              : 8 68
+INTEGERNUMBER        : 84
+LCB                  : 25 40
+LE                   : 76
+LRB                  : 2 17 18 39 40 41 42 43 44 45 46 47 56 57 58
+LSB                  : 12 24 30
+LT                   : 73
+MAIN                 : 2
+MOD                  : 67
+MUL                  : 65 82
+NE                   : 74
+NOT                  : 60
+ON                   : 40
+OR                   : 62
+PRINT                : 45
+RCB                  : 25 40
+RETURN               : 35
+RRB                  : 2 17 18 39 40 41 42 43 44 45 46 47 56 57 58
+RSB                  : 12 24 30
+SEMICOLON            : 16 35 36 40 41 41 45
+SUB                  : 59 64 81
+SUM                  : 63 80
+THEN                 : 
+TRUE                 : 70
+WHERE                : 31
+WHILE                : 39
+error                : 
+
+Nonterminals, with rules where they appear
+
+block                : 2 17 18 37
+case                 : 32 33
+cases                : 33 40
+const                : 31 54
+dec                  : 3 4
+declist              : 2 4
+elseiflist           : 43 44 47
+epsilon              : 5 20 28 34 48 0
+exp                  : 12 13 30 35 36 39 40 41 41 41 43 44 46 47 49 49 50 51 52 52 57 59 60 78 79 80 80 81 81 82 82 83 83
+explist              : 56 79
+funcdec              : 7
+iddec                : 14 15
+idlist               : 15 16
+lvalue               : 51 55
+operator             : 52
+paramdec             : 21 22
+paramdecs            : 17 18
+paramdecslist        : 19 22
+program              : 
+relop                : 49 50
+relopexp             : 50 53
+stmt                 : 26 27 39 41 42 43 44 44 46 47
+stmtlist             : 25 27 31
+type                 : 16 17 23 24
+vardec               : 6 38
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . epsilon
+    (1) epsilon -> .
+
+    $end            reduce using rule 1 (epsilon -> .)
+
+    epsilon                        shift and go to state 1
+
+state 1
+
+    (0) S' -> epsilon .
+
+

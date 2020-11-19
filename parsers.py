@@ -74,90 +74,143 @@ class Parser:
         """paramdec : ID COLON type
                     | ID LSB RSB COLON type"""
 
-    print("paramdec : ID COLON type | ID LSB RSB COLON type")
+        print("paramdec : ID COLON type | ID LSB RSB COLON type")
 
     def p_block(self, p):
-        "block : LCB stimtlist RCB"
-        print("block : LCB stimtlist RCB")
+        "block : LCB stmtlist RCB"
+
+        print("block : LCB stmtlist RCB")
 
     def p_stmtlist(self, p):
-        "stmlist : stmt | stmlist stmt | epsilon"
-        print("stmlist : stmt | stmlist stmt | epsilon")
+        """stmtlist : stmt
+        | stmtlist stmt
+        | epsilon"""
+
+        print("stmtlist : stmt | stmtlist stmt | epsilon")
 
     def p_lvalue(self, p):
-        "lvalue : id | id LSB exp RSB"
-        print("lvalue : id | id LSB exp RSB")
+        """lvalue : ID
+        | ID LSB exp RSB"""
+
+        print("lvalue : ID | ID LSB exp RSB")
 
     def p_case(self, p):
-        "case : where const COLON stmtlist"
-        print("case : where const COLON stmtlist")
+        "case : WHERE const COLON stmtlist"
+
+        print("case : WHERE const COLON stmtlist")
 
     def p_cases(self, p):
-        "cases : case | cases case | epsilon"
+        """cases : case
+        | cases case
+        | epsilon"""
+
         print("cases : case | cases case | epsilon")
 
     def p_stmt(self, p):
-        """stmt : return exp SEMICOLON | exp SEMICOLON | block | vardec |
-        while LRB exp RRB stmt | on LRB exp RRB LCB cases RCB SEMICOLON |
-        for LRB exp SEMICOLON exp SEMICOLON exp RRB stmt | for LRB id in id RRB stmt |
-        if LRB exp RRB stmt elseiflist | if LRB exp RRB stmt elseiflist else stmt |
-        print LRB id RRB SEMICOLON"""
+        """stmt : RETURN exp SEMICOLON
+        | exp SEMICOLON
+        | block
+        | vardec
+        | WHILE LRB exp RRB stmt
+        | ON LRB exp RRB LCB cases RCB SEMICOLON
+        | FOR LRB exp SEMICOLON exp SEMICOLON exp RRB stmt
+        | FOR LRB ID IN ID RRB stmt
+        | IF LRB exp RRB stmt elseiflist
+        | IF LRB exp RRB stmt elseiflist ELSE stmt
+        | PRINT LRB ID RRB SEMICOLON"""
 
-        print("""stmt : return exp SEMICOLON | exp SEMICOLON | block | vardec |
-        while LRB exp RRB stmt | on LRB exp RRB LCB cases RCB SEMICOLON |
-        for LRB exp SEMICOLON exp SEMICOLON exp RRB stmt | for LRB id in id RRB stmt |
-        if LRB exp RRB stmt elseiflist | if LRB exp RRB stmt elseiflist else stmt |
-        print LRB id RRB SEMICOLON""")
+        print("""stmt : RETURN exp SEMICOLON | exp SEMICOLON | block | vardec
+        | WHILE LRB exp RRB stmt | ON LRB exp RRB LCB cases RCB SEMICOLON
+        | FOR LRB exp SEMICOLON exp SEMICOLON exp RRB stmt | FOR LRB ID IN ID RRB stmt
+        | IF LRB exp RRB stmt elseiflist | IF LRB exp RRB stmt elseiflist ELSE stmt
+        | PRINT LRB ID RRB SEMICOLON""")
 
     def p_elseiflist(self, p):
-        "elseiflist : elseif LRB exp RRB stmt | elseiflist elseif LRB exp RRB stmt | epsilon"
-        print("elseiflist : elseif LRB exp RRB stmt | elseiflist elseif LRB exp RRB stmt | epsilon")
+        """elseiflist : ELSEIF LRB exp RRB stmt
+        | elseiflist ELSEIF LRB exp RRB stmt
+        | epsilon"""
+
+        print("elseiflist : ELSEIF LRB exp RRB stmt | elseiflist ELSEIF LRB exp RRB stmt | epsilon")
 
     def p_relopexp(self, p):
-        "relocexp : exp reloc exp | relopexp relop exp"
-        print("relocexp : exp reloc exp | relopexp relop exp")
+        """relopexp : exp relop exp
+        | relopexp relop exp"""
+
+        print("relopexp : exp relop exp | relopexp relop exp")
 
     def p_exp(self, p):
-        """exp : lvalue ASSIGN exp | exp operator exp | relopexp
-        const | lvalue | id LRB explist RRB | LRB exp RRB | id LRB RRB | SUB exp | not exp"""
+        """exp : lvalue ASSIGN exp
+        | exp operator exp
+        | relopexp
+        | const
+        | lvalue
+        | ID LRB explist RRB
+        | LRB exp RRB
+        | ID LRB RRB
+        | SUB exp
+        | NOT exp"""
 
-        print("""exp : lvalue ASSIGN exp | exp operator exp | relopexp
-        const | lvalue | id LRB explist RRB | LRB exp RRB | id LRB RRB | SUB exp | not exp""")
+        print("""exp : lvalue ASSIGN exp | exp operator exp | relopexp |
+        const | lvalue | ID LRB explist RRB | LRB exp RRB | ID LRB RRB | SUB exp | NOT exp""")
 
     def p_operator(self, p):
-        "operator : and | or | SUM | SUB | MUL | DIV | MOD"
-        print("operator : and | or | SUM | SUB | MUL | DIV | MOD")
+        """operator : AND
+        | OR
+        | SUM
+        | SUB
+        | MUL
+        | DIV
+        | MOD"""
+
+        print("operator : AND | OR | SUM | SUB | MUL | DIV | MOD")
 
     def p_const(self, p):
-        "const : intnumber | floatnumber | True | False"
-        print("const : intnumber | floatnumber | True | False")
+        """const : INTEGER
+        | FLOAT
+        | TRUE
+        | FALSE"""
+
+        print("const : INTEGER | FLOAT | True | False")
 
     def p_relop(self, p):
-        "relop : GT | LT | NE | EQ | LE | GE"
+        """relop : GT
+        | LT
+        | NE
+        | EQ
+        | LE
+        | GE"""
+
         print("relop : GT | LT | NE | EQ | LE | GE")
 
     def p_explist(self, p):
-        "explist : exp | explist COMMA exp"
+        """explist : exp
+        | explist COMMA exp"""
+
         print("explist : exp | explist COMMA exp")
 
     def p_exp_sum(self, p):
         "exp : exp SUM exp"
+
         print("exp : exp SUM exp")
 
     def p_exp_sub(self, p):
         "exp : exp SUB exp"
+
         print("exp : exp SUB exp")
 
     def p_exp_mul(self, p):
         "exp : exp MUL exp"
+
         print("exp : exp MUL exp")
 
     def p_exp_div(self, p):
         "exp : exp DIV exp"
+
         print("exp : exp DIV exp")
 
     def p_exp_integer(self, p):
         "exp : INTEGERNUMBER"
+
         print("exp : INTEGERNUMBER")
         # p[0] = NonTerminal()
         # p[0].value = p[1]
