@@ -188,32 +188,32 @@ class Parser:
 
         print("explist : exp | explist COMMA exp")
 
-    def p_exp_sum(self, p):
-        "exp : exp SUM exp"
-
-        print("exp : exp SUM exp")
-
-    def p_exp_sub(self, p):
-        "exp : exp SUB exp"
-
-        print("exp : exp SUB exp")
-
-    def p_exp_mul(self, p):
-        "exp : exp MUL exp"
-
-        print("exp : exp MUL exp")
-
-    def p_exp_div(self, p):
-        "exp : exp DIV exp"
-
-        print("exp : exp DIV exp")
-
-    def p_exp_integer(self, p):
-        "exp : INTEGERNUMBER"
-
-        print("exp : INTEGERNUMBER")
-        # p[0] = NonTerminal()
-        # p[0].value = p[1]
+    # def p_exp_sum(self, p):
+    #     "exp : exp SUM exp"
+    #
+    #     print("exp : exp SUM exp")
+    #
+    # def p_exp_sub(self, p):
+    #     "exp : exp SUB exp"
+    #
+    #     print("exp : exp SUB exp")
+    #
+    # def p_exp_mul(self, p):
+    #     "exp : exp MUL exp"
+    #
+    #     print("exp : exp MUL exp")
+    #
+    # def p_exp_div(self, p):
+    #     "exp : exp DIV exp"
+    #
+    #     print("exp : exp DIV exp")
+    #
+    # def p_exp_integer(self, p):
+    #     "exp : INTEGERNUMBER"
+    #
+    #     print("exp : INTEGERNUMBER")
+    #     # p[0] = NonTerminal()
+    #     # p[0].value = p[1]
 
 
     precedence = (

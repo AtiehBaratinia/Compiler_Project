@@ -2,7 +2,7 @@ from lexer import Lexer
 from parsers import Parser
 
 if __name__ == "__main__":
-    file = open('test.txt')
+    file = open('test1.txt')
     text_input = file.read()
     file.close()
     lexer = Lexer().build()
