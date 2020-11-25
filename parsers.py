@@ -138,6 +138,7 @@ class Parser:
 
     def p_exp(self, p):
         """exp : lvalue ASSIGN exp
+        | ID ASSIGN exp
         | exp operator exp
         | relopexp
         | const
