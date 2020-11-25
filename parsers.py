@@ -13,9 +13,7 @@ class Parser:
         # self.tempCount = 0
         # self.codeGenerator = CodeGenerator()
 
-    def p_epsilon(self, p):
-        'epsilon :'
-        pass
+
 
     def p_program(self, p):
         "program : declist MAIN LRB RRB block"
@@ -215,6 +213,9 @@ class Parser:
     #     # p[0] = NonTerminal()
     #     # p[0].value = p[1]
 
+    def p_epsilon(self, p):
+        'epsilon :'
+        pass
 
     precedence = (
         ('left', 'SUM', 'SUB'),
