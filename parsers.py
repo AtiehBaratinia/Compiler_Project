@@ -163,8 +163,8 @@ class Parser:
         print("operator : AND | OR | SUM | SUB | MUL | DIV | MOD")
 
     def p_const(self, p):
-        """const : INTEGER
-        | FLOAT
+        """const : INTEGERNUMBER
+        | FLOATNUMBER
         | TRUE
         | FALSE"""
 
