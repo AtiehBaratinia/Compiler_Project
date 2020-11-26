@@ -124,11 +124,13 @@ class Parser:
         | PRINT LRB ID RRB SEMICOLON""")
 
     def p_elseiflist(self, p):
-        """elseiflist : ELSEIF LRB exp RRB stmt
-        | elseiflist ELSEIF LRB exp RRB stmt
+        # """elseiflist : ELSEIF LRB exp RRB stmt
+        # | elseiflist ELSEIF LRB exp RRB stmt
+        # | epsilon"""
+        """elseiflist : elseiflist ELSEIF LRB exp RRB stmt
         | epsilon"""
 
-        print("elseiflist : ELSEIF LRB exp RRB stmt | elseiflist ELSEIF LRB exp RRB stmt | epsilon")
+        print("elseiflist : elseiflist ELSEIF LRB exp RRB stmt | epsilon")
 
     def p_relopexp(self, p):
         """relopexp : exp relop exp
@@ -137,7 +139,7 @@ class Parser:
         print("relopexp : exp relop exp | relopexp relop exp")
 
     def p_exp(self, p):
-        """exp : lvalue ASSIGN exp
+        """exp : ID LSB exp RSB ASSIGN exp
         | ID ASSIGN exp
         | exp operator exp
         | relopexp
@@ -208,7 +210,7 @@ class Parser:
     #     print("exp : exp DIV exp")
     #
     # def p_exp_integer(self, p):
-    #     "exp : INTEGERNUMBER"
+    #     "expdfg : INTEGERNUMBER"
     #
     #     print("exp : INTEGERNUMBER")
     #     # p[0] = NonTerminal()
