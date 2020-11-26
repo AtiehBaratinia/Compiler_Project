@@ -104,7 +104,15 @@ class Parser:
         print("cases : case | cases case | epsilon")
 
     def p_stmt(self, p):
-        """stmt : RETURN exp SEMICOLON
+        """stmt : ostmt
+        | mstmt"""
+
+        print("""stmt : ostmt
+        | mstmt""")
+
+    def p_mstmt(self, p):
+        """mstmt : IF LRB exp RRB mstmt elseiflist ELSE mstmt
+        | RETURN exp SEMICOLON
         | exp SEMICOLON
         | block
         | vardec
@@ -112,15 +120,25 @@ class Parser:
         | ON LRB exp RRB LCB cases RCB SEMICOLON
         | FOR LRB exp SEMICOLON exp SEMICOLON exp RRB stmt
         | FOR LRB ID IN ID RRB stmt
-        | IF LRB exp RRB stmt elseiflist
-        | IF LRB exp RRB stmt elseiflist ELSE stmt
         | PRINT LRB ID RRB SEMICOLON"""
 
-        print("""stmt : RETURN exp SEMICOLON | exp SEMICOLON | block | vardec
-        | WHILE LRB exp RRB stmt | ON LRB exp RRB LCB cases RCB SEMICOLON
-        | FOR LRB exp SEMICOLON exp SEMICOLON exp RRB stmt | FOR LRB ID IN ID RRB stmt
-        | IF LRB exp RRB stmt elseiflist | IF LRB exp RRB stmt elseiflist ELSE stmt
+        print("""mstmt : IF LRB exp RRB mstmt elseiflist ELSE mstmt
+        | RETURN exp SEMICOLON
+        | exp SEMICOLON
+        | block
+        | vardec
+        | WHILE LRB exp RRB stmt
+        | ON LRB exp RRB LCB cases RCB SEMICOLON
+        | FOR LRB exp SEMICOLON exp SEMICOLON exp RRB stmt
+        | FOR LRB ID IN ID RRB stmt
         | PRINT LRB ID RRB SEMICOLON""")
+
+    def p_ostmt(self, p):
+        """ostmt : IF LRB exp RRB mstmt elseiflist
+        | IF LRB exp RRB mstmt elseiflist ELSE ostmt"""
+
+        print("""ostmt : IF LRB exp RRB stmt elseiflist
+        | IF LRB exp RRB mstmt elseiflist ELSE ostmt""")
 
     def p_elseiflist(self, p):
         # """elseiflist : ELSEIF LRB exp RRB stmt
