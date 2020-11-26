@@ -240,6 +240,8 @@ class Parser:
         pass
 
     precedence = (
+        ('left', 'COMMA'),
+        ('right', 'ASSIGN'),
         ('left', 'OR'),
         ('left', 'AND'),
         ('left', 'NE', 'EQ'),
