@@ -21,10 +21,9 @@ class Parser:
 
     #####################
     def p_declist(self, p):
-        """declist : dec
-                   | declist dec
+        """declist : declist dec
                    | epsilon"""
-        print("declist : dec | declist dec | epsilon")
+        print("declist : declist dec | epsilon")
     ##################
 
     def p_dec(self, p):
@@ -132,17 +131,29 @@ class Parser:
 
         print("elseiflist : elseiflist ELSEIF LRB exp RRB stmt | epsilon")
 
-    def p_relopexp(self, p):
-        """relopexp : exp relop exp
-        | relopexp relop exp"""
-
-        print("relopexp : exp relop exp | relopexp relop exp")
+    # def p_relopexp(self, p):
+    #     # """relopexp : exp relop exp
+    #     # | relopexp relop exp"""
+    #     """relopexp : exp relop exp"""
+    #
+    #     print("relopexp : exp relop exp ")
 
     def p_exp(self, p):
         """exp : ID LSB exp RSB ASSIGN exp
         | ID ASSIGN exp
-        | exp operator exp
-        | relopexp
+        | exp SUM exp
+        | exp SUB exp
+        | exp MUL exp
+        | exp MOD exp
+        | exp DIV exp
+        | exp AND exp
+        | exp OR exp
+        | exp GT exp
+        | exp GE exp
+        | exp NE exp
+        | exp EQ exp
+        | exp LE exp
+        | exp LT exp
         | const
         | lvalue
         | ID LRB explist RRB
@@ -151,19 +162,27 @@ class Parser:
         | SUB exp
         | NOT exp"""
 
-        print("""exp : lvalue ASSIGN exp | exp operator exp | relopexp |
+        print("""exp : lvalue ASSIGN exp | exp operator exp | exp relop exp |
         const | lvalue | ID LRB explist RRB | LRB exp RRB | ID LRB RRB | SUB exp | NOT exp""")
 
-    def p_operator(self, p):
-        """operator : AND
-        | OR
-        | SUM
-        | SUB
-        | MUL
-        | DIV
-        | MOD"""
+    # def p_operator1(self, p):
+    #     """operator1 : MUL
+    #     | DIV
+    #     | MOD"""
+    #
+    #     print("operator1 : MUL | DIV | MOD")
 
-        print("operator : AND | OR | SUM | SUB | MUL | DIV | MOD")
+    # def p_operator2(self, p):
+    #     """operator2 : SUM
+    #     | SUB"""
+    #
+    #     print("operator2 :SUM | SUB ")
+
+    # def p_operator3(self, p):
+    #     """operator3 : AND
+    #     | OR"""
+    #
+    #     print("operator3 : AND | OR ")
 
     def p_const(self, p):
         """const : INTEGERNUMBER
@@ -173,15 +192,15 @@ class Parser:
 
         print("const : INTEGER | FLOAT | True | False")
 
-    def p_relop(self, p):
-        """relop : GT
-        | LT
-        | NE
-        | EQ
-        | LE
-        | GE"""
-
-        print("relop : GT | LT | NE | EQ | LE | GE")
+    # def p_relop(self, p):
+    #     """relop : GT
+    #     | LT
+    #     | NE
+    #     | EQ
+    #     | LE
+    #     | GE"""
+    #
+    #     print("relop : GT | LT | NE | EQ | LE | GE")
 
     def p_explist(self, p):
         """explist : exp
@@ -221,8 +240,12 @@ class Parser:
         pass
 
     precedence = (
+        ('left', 'OR'),
+        ('left', 'AND'),
+        ('left', 'NE', 'EQ'),
+        ('left', 'GT', 'LT', 'LE', 'GE'),
         ('left', 'SUM', 'SUB'),
-        ('left', 'MUL', 'DIV')
+        ('left', 'MUL', 'DIV', 'MOD')
     )
 
     def p_error(self, p):
